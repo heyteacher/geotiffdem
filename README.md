@@ -26,7 +26,7 @@ GDAL
 ---
 [GDAL Library](https://gdal.org/) tool `gdallocationinfo` you can query these Geottiffs by latitude and longitude coordinated to extract the digital elevation. For instance:
 ```
-gdalocationinfo eu_dem_v11_E30N40.TIF -wgs84 -18.278987 65.550225 -xml
+gdallocationinfo eu_dem_v11_E30N40.TIF -wgs84 -18.278987 65.550225 -xml
 
 <Report pixel="1910" line="817">
   <BandReport band="1">
