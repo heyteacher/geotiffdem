@@ -1,0 +1,7 @@
+{
+    "httpMethod": "GET",
+    "pathParameters": {
+        "lat": "65.550225",
+        "lng": "-18.278987"
+    }
+}

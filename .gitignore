@@ -1,0 +1,5 @@
+gdallocationinfo-layer/
+tiffs_s3/
+tiffs_downloads/
+geotiffdem/dem-stresstest.sh
+BUILD.md

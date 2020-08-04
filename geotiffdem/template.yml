@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  geotiffdem
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Parameters:
+  GeoTiffBucketName:
+    Type: String
+    Default: 'geo-tiff'
+  GeoTiffDirPath:
+    Type: String
+    Default: 'tiffs'
+
+Resources:
+
+  DemRestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Auth:
+        ApiKeyRequired: true
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          Description: DEM UsagePlan
+          Quota:
+            Limit: 1000000
+            Period: MONTH
+          Throttle:
+            BurstLimit: 100 # 100 requests per second
+            RateLimit: 10   # 10 requests per second
+          UsagePlanName: DemUsagePlan
+
+  DemNoKeyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      MethodSettings:
+      - ResourcePath: /public/{lat}/{lng}
+        HttpMethod: GET
+        ThrottlingBurstLimit : 1   # one request per second
+        ThrottlingRateLimit : 0.05 # one request per 20 seconds
+
+  getDemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/get-dem.getDemHandler
+      Runtime: nodejs12.x
+      MemorySize: 128
+      Timeout: 10
+      Description: get DEM from (lat, lng)
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref GeoTiffBucketName
+      Layers:
+        - arn:aws:lambda:eu-west-1:304029582536:layer:gdal:1
+      Environment:
+        Variables:
+          GEOTIFF_BUCKET_NAME: !Ref GeoTiffBucketName
+          GEOTIFF_DIR_PATH:  !Ref GeoTiffDirPath
+      Events:
+        KeyApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DemRestApi
+            Path: /{lat}/{lng}
+            Method: GET
+        NoKeyApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref DemNoKeyApi
+            Path: /public/{lat}/{lng}
+            Method: GET
+
+Outputs:
+  DemRestApiEndpoint:
+    Description: "API Gateway endpoint URL API_KEY protected for Prod stage"
+    Value: !Sub "https://${DemRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/{lat}/{lng}"
+  DemNoKeyApiEndpoint:
+    Description: "API Gateway endpoint URL public (no API_KEY) for Prod stage"
+    Value: !Sub "https://${DemNoKeyApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/public/{lat}/{lng}"

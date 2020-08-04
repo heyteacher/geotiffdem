@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "geotiffdem"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-4i38zyyugko3"
+s3_prefix = "geotiffdem"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "GeoTiffBucketName=\"geo-tiff\" GeoTiffDirPath=\"tiffs\""
+

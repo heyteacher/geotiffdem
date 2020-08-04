@@ -1,0 +1,19 @@
+{
+    "name": "geotiffdem",
+    "description": "get DEM by latitude and longitude from EU DEM TIFF ",
+    "version": "1.0.0",
+    "license": "MIT",
+    "dependencies": {
+        "geolib": "^3.3.1",
+        "xml2json": "^0.12.0"
+    },
+    "devDependencies": {
+        "aws-sdk": "^2.437.0",
+        "jest": "^24.7.1"
+    },
+    "scripts": {
+        "invoke": "sam local invoke getDemFunction --event events/event-get-dem.json",
+        "test": "jest",
+        "dictionary": "node src/build-tiff-dictionary.js"
+    }
+}
