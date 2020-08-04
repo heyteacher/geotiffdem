@@ -1,4 +1,10 @@
-﻿Europe Digital Elevation by latitude and longitude  
+
+[![GitHub Sponsors](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub)](https://github.com/sponsors/heyteacher)
+[![Liberpay](http://img.shields.io/liberapay/receives/heyteacher.svg?logo=liberapay)](https://liberapay.com/heyteacher/donate)
+[![GitHub license](https://img.shields.io/github/license/heyteacher/geotiffdem)](https://github.com/heyteacher/geotiffdem/blob/master/LICENSE)
+[![GitHub commit](https://img.shields.io/github/last-commit/heyteacher/geotiffdem)](https://github.com/heyteacher/geotiffdem/commits/master)
+
+Europe Digital Elevation by latitude and longitude  
 ===
 __AWS Serverless Application__ which expose a REST API to extract __digital elevation__ by european latitude/longitude using __EU DEM 1.1__.
 
