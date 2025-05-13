@@ -9,7 +9,7 @@
     },
     "devDependencies": {
         "aws-sdk": "^2.814.0",
-        "jest": "^24.7.1"
+        "jest": "^29.7.0"
     },
     "scripts": {
         "invoke": "sam local invoke getDemFunction --event events/event-get-dem.json",
