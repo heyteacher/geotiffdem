@@ -4,7 +4,7 @@ const gdal = require('../lib/gdal')
  * handler of DEM Api REST
  * @param {*} event: the event HTTP Request
  */
-exports.getDemHandler = async(event) => {
+exports.getDemHandler = async (event) => {
     try {
 
         // only get is allowed
@@ -15,6 +15,11 @@ exports.getDemHandler = async(event) => {
         // calculate digital elevation and wrap into http response
         const response = {
             statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS"
+            },
             body: JSON.stringify({
                 status: true,
                 dem: await gdal.gdallocationinfo(event.pathParameters.lat, event.pathParameters.lng)
